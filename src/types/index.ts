@@ -3,7 +3,7 @@
 export type BillDenomination = 100 | 200 | 500 | 1000 | 2000 | 10000 | 20000;
 
 export const BILL_DENOMINATIONS: BillDenomination[] = [
-  100, 200, 500, 1000, 2000, 10000, 20000,
+  20000, 10000, 2000, 1000, 500, 200, 100,
 ];
 
 export interface DayEntry {
