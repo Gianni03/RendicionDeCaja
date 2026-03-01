@@ -2,14 +2,14 @@
   background: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
-  padding: 24px;
+  padding: 18px 16px;
 }
 
 .title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #111;
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
 }
 
 .empty {
@@ -22,25 +22,29 @@
 
 .tableWrapper {
   overflow-x: auto;
+  /* Smooth scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
   border-radius: 8px;
   border: 1px solid #e8e8e8;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  /* Prevent table from being too narrow */
+  min-width: 320px;
+  font-size: 0.875rem;
 }
 
 .th {
   background: #f5f5f5;
   color: #555;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 10px 14px;
+  padding: 9px 12px;
   text-align: left;
   border-bottom: 1px solid #e8e8e8;
   white-space: nowrap;
@@ -51,7 +55,7 @@
 }
 
 .td {
-  padding: 11px 14px;
+  padding: 11px 12px;
   color: #222;
   border-bottom: 1px solid #f0f0f0;
   white-space: nowrap;
@@ -59,10 +63,6 @@
 
 .row:last-child .td {
   border-bottom: none;
-}
-
-.row:hover .td {
-  background: #fafafa;
 }
 
 .positive {
@@ -77,22 +77,26 @@
 
 .removeBtn {
   background: none;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  color: #bbb;
-  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  color: #ccc;
+  font-size: 1.3rem;
   line-height: 1;
   cursor: pointer;
-  padding: 2px 7px;
+  /* Proper touch target size */
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition:
     color 0.15s,
-    border-color 0.15s,
     background 0.15s;
 }
 
-.removeBtn:hover {
+.removeBtn:hover,
+.removeBtn:active {
   color: #b91c1c;
-  border-color: #fecaca;
   background: #fef2f2;
 }
 
@@ -104,7 +108,7 @@
 
 .footerLabel {
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: #555;
@@ -115,25 +119,25 @@
   color: #111;
 }
 
+/* ── Summary cards ── */
 .summary {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .summaryItem {
-  flex: 1;
-  min-width: 200px;
   background: #f5f5f5;
   border-radius: 8px;
-  padding: 14px 16px;
+  padding: 12px 14px;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .summaryLabel {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: #777;
   text-transform: uppercase;
@@ -141,11 +145,32 @@
 }
 
 .summaryAmount {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #111;
+  white-space: nowrap;
 }
 
 .highlight {
   color: #166534;
+}
+
+@media (min-width: 480px) {
+  .summary {
+    flex-direction: row;
+  }
+
+  .summaryItem {
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 24px;
+  }
 }

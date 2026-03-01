@@ -2,7 +2,7 @@
 .container {
   border: 2px solid #e0e0e0;
   border-radius: 12px;
-  padding: 24px;
+  padding: 18px 16px;
   background: #fff;
   transition:
     border-color 0.2s,
@@ -26,27 +26,27 @@
 }
 
 .title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #111;
-  margin: 0 0 20px 0;
+  margin: 0 0 14px 0;
 }
 
 .empty {
   color: #888;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   text-align: center;
-  padding: 16px 0 4px;
+  padding: 12px 0 4px;
   margin: 0;
 }
 
 /* Status badge */
 .statusBadge {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .statusLabel {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -69,25 +69,30 @@
   color: #92400e;
 }
 
-/* Main grid */
+/* Main grid — stacks on mobile */
 .grid {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 400px) {
+  .grid {
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 .item {
   flex: 1;
-  min-width: 140px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .itemLabel {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #777;
   text-transform: uppercase;
@@ -95,18 +100,18 @@
 }
 
 .itemAmount {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #111;
 }
 
 .divider {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #aaa;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 0 4px;
+  text-align: center;
 }
 
 /* Difference */
@@ -115,12 +120,12 @@
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid rgba(0, 0, 0, 0.07);
-  padding-top: 16px;
-  margin-bottom: 12px;
+  padding-top: 14px;
+  margin-bottom: 10px;
 }
 
 .differenceLabel {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -128,7 +133,7 @@
 }
 
 .differenceAmount {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
 }
 
@@ -143,7 +148,13 @@
 }
 
 .description {
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   color: #666;
   margin: 0;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 24px;
+  }
 }

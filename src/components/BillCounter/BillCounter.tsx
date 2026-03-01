@@ -31,6 +31,7 @@ export function BillCounter() {
                   <input
                     id={`bill-${bill.denomination}`}
                     type="number"
+                    inputMode="numeric"
                     className={styles.input}
                     value={bill.quantity === 0 ? '' : bill.quantity}
                     onChange={(e) => {

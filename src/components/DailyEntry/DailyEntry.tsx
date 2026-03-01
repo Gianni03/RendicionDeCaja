@@ -89,6 +89,7 @@ export function DailyEntry() {
               <input
                 id="entry-facturado"
                 type="number"
+                inputMode="decimal"
                 className={styles.input}
                 value={totalFacturado}
                 onChange={(e) => setTotalFacturado(e.target.value)}
@@ -106,6 +107,7 @@ export function DailyEntry() {
               <input
                 id="entry-posnet"
                 type="number"
+                inputMode="decimal"
                 className={styles.input}
                 value={posnet}
                 onChange={(e) => setPosnet(e.target.value)}

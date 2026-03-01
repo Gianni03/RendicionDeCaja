@@ -2,55 +2,70 @@
   background: #f8f8f8;
   border: 1.5px dashed #ccc;
   border-radius: 12px;
-  padding: 22px 24px;
+  padding: 18px 16px;
 }
 
 .content {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (min-width: 480px) {
+  .content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .info {
   flex: 1;
-  min-width: 200px;
+  min-width: 0;
 }
 
 .title {
   font-size: 1rem;
   font-weight: 700;
   color: #111;
-  margin: 0 0 4px 0;
+  margin: 0 0 3px 0;
 }
 
 .description {
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   color: #777;
   margin: 0;
 }
 
 .actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
   flex-shrink: 0;
-  flex-wrap: wrap;
+}
+
+@media (min-width: 480px) {
+  .actions {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .btnDownload,
 .btnShare {
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  padding: 10px 18px;
-  border-radius: 8px;
+  padding: 13px 16px;
+  min-height: 50px;
+  border-radius: 10px;
   cursor: pointer;
   transition:
     background 0.15s,
     color 0.15s,
     transform 0.1s;
   border: none;
+  text-align: center;
 }
 
 .btnDownload {
@@ -85,7 +100,13 @@
 }
 
 .hint {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #999;
   margin: 12px 0 0 0;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 22px 24px;
+  }
 }
