@@ -1,0 +1,91 @@
+.container {
+  background: #f8f8f8;
+  border: 1.5px dashed #ccc;
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 4px 0;
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #777;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.btnDownload,
+.btnShare {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    transform 0.1s;
+  border: none;
+}
+
+.btnDownload {
+  background: #111;
+  color: #fff;
+}
+
+.btnDownload:hover:not(:disabled) {
+  background: #333;
+}
+
+.btnShare {
+  background: #fff;
+  color: #111;
+  border: 1.5px solid #ccc;
+}
+
+.btnShare:hover:not(:disabled) {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.btnDownload:active:not(:disabled),
+.btnShare:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btnDownload:disabled,
+.btnShare:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #999;
+  margin: 12px 0 0 0;
+}

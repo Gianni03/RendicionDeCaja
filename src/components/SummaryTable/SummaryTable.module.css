@@ -1,0 +1,151 @@
+.container {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 20px 0;
+}
+
+.empty {
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 24px 0;
+  margin: 0;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.th {
+  background: #f5f5f5;
+  color: #555;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #e8e8e8;
+  white-space: nowrap;
+}
+
+.right {
+  text-align: right;
+}
+
+.td {
+  padding: 11px 14px;
+  color: #222;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+
+.row:last-child .td {
+  border-bottom: none;
+}
+
+.row:hover .td {
+  background: #fafafa;
+}
+
+.positive {
+  color: #166534;
+  font-weight: 600;
+}
+
+.negative {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.removeBtn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #bbb;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 7px;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.removeBtn:hover {
+  color: #b91c1c;
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.footerRow .td {
+  border-top: 2px solid #e0e0e0;
+  border-bottom: none;
+  background: #fafafa;
+}
+
+.footerLabel {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #555;
+}
+
+.footerValue {
+  font-weight: 700;
+  color: #111;
+}
+
+.summary {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.summaryItem {
+  flex: 1;
+  min-width: 200px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summaryLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.summaryAmount {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.highlight {
+  color: #166534;
+}
