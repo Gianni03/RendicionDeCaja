@@ -28,24 +28,47 @@ export function BillCounter() {
                   $ {bill.denomination.toLocaleString('es-AR')}
                 </td>
                 <td className={`${styles.td} ${styles.center}`}>
-                  <input
-                    id={`bill-${bill.denomination}`}
-                    type="number"
-                    inputMode="numeric"
-                    className={styles.input}
-                    value={bill.quantity === 0 ? '' : bill.quantity}
-                    onChange={(e) => {
-                      const val = parseInt(e.target.value, 10);
-                      updateBillQuantity(
-                        bill.denomination,
-                        isNaN(val) || val < 0 ? 0 : val,
-                      );
-                    }}
-                    min="0"
-                    step="1"
-                    placeholder="0"
-                    aria-label={`Cantidad billetes $${bill.denomination}`}
-                  />
+                  <div className={styles.quantityWrapper}>
+                    <button
+                      type="button"
+                      className={styles.qtyBtn}
+                      onClick={() => {
+                        const newQty = Math.max(0, bill.quantity - 1);
+                        updateBillQuantity(bill.denomination, newQty);
+                      }}
+                      aria-label={`Decrecer cantidad de $${bill.denomination}`}
+                    >
+                      −
+                    </button>
+                    <input
+                      id={`bill-${bill.denomination}`}
+                      type="number"
+                      inputMode="numeric"
+                      className={styles.input}
+                      value={bill.quantity === 0 ? '' : bill.quantity}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value, 10);
+                        updateBillQuantity(
+                          bill.denomination,
+                          isNaN(val) || val < 0 ? 0 : val,
+                        );
+                      }}
+                      min="0"
+                      step="1"
+                      placeholder="0"
+                      aria-label={`Cantidad billetes $${bill.denomination}`}
+                    />
+                    <button
+                      type="button"
+                      className={styles.qtyBtn}
+                      onClick={() => {
+                        updateBillQuantity(bill.denomination, bill.quantity + 1);
+                      }}
+                      aria-label={`Aumentar cantidad de $${bill.denomination}`}
+                    >
+                      +
+                    </button>
+                  </div>
                 </td>
                 <td
                   className={`${styles.td} ${styles.right} ${

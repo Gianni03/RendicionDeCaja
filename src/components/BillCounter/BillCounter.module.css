@@ -90,6 +90,53 @@
   background: #fff;
 }
 
+/* Quantity wrapper with + and - buttons */
+.quantityWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.qtyBtn {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    transform 0.1s;
+  /* Touch-friendly size */
+  min-width: 36px;
+  min-height: 36px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.qtyBtn:active {
+  background: #f0f0f0;
+  transform: scale(0.95);
+}
+
+.qtyBtn:hover {
+  border-color: #1a1a1a;
+}
+
+.qtyBtn:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
 /* Remove spinners (desktop) */
 .input::-webkit-outer-spin-button,
 .input::-webkit-inner-spin-button {
