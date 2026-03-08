@@ -12,22 +12,34 @@ import {
 export function calcEfectivoDia(
   totalFacturado: number,
   posnet: number,
+  gastos: number = 0,
 ): number {
-  return totalFacturado - posnet;
+  return (totalFacturado - posnet) - gastos;
 }
 
 export function createDayEntry(
   date: string,
   totalFacturado: number,
   posnet: number,
+  gastos: number = 0,
+  descripcionGasto?: string,
 ): DayEntry {
-  return {
+  const efectivoDia = calcEfectivoDia(totalFacturado, posnet, gastos);
+  
+  const entry: DayEntry = {
     id: uuidv4(),
     date,
     totalFacturado,
     posnet,
-    efectivoDia: calcEfectivoDia(totalFacturado, posnet),
+    efectivoDia,
+    gastos,
   };
+
+  if (descripcionGasto && descripcionGasto.length > 0) {
+    entry.descripcionGasto = descripcionGasto.slice(0, 50);
+  }
+
+  return entry;
 }
 
 // ─── Totals ─────────────────────────────────────────────────────────────────
@@ -38,6 +50,10 @@ export function calcTotalPosnet(days: DayEntry[]): number {
 
 export function calcTotalEfectivoEsperado(days: DayEntry[]): number {
   return days.reduce((acc, d) => acc + d.efectivoDia, 0);
+}
+
+export function calcTotalGastos(days: DayEntry[]): number {
+  return days.reduce((acc, d) => acc + (d.gastos || 0), 0);
 }
 
 // ─── Bills ──────────────────────────────────────────────────────────────────

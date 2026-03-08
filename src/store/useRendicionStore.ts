@@ -26,6 +26,8 @@ interface RendicionStore {
     date: string,
     totalFacturado: number,
     posnet: number,
+    gastos?: number,
+    descripcionGasto?: string,
   ) => string | null;
   removeDay: (id: string) => void;
   updateBillQuantity: (
@@ -51,7 +53,7 @@ export const useRendicionStore = create<RendicionStore>()(
   subscribeWithSelector((set, get) => ({
     ...defaultState,
 
-    addDay(date, totalFacturado, posnet) {
+    addDay(date, totalFacturado, posnet, gastos, descripcionGasto) {
       const state = get();
 
       if (state.days.length >= MAX_DAYS) {
@@ -63,7 +65,7 @@ export const useRendicionStore = create<RendicionStore>()(
         return 'Ya existe una rendición para esa fecha.';
       }
 
-      const entry = createDayEntry(date, totalFacturado, posnet);
+      const entry = createDayEntry(date, totalFacturado, posnet, gastos, descripcionGasto);
       const days = [...state.days, entry].sort((a, b) =>
         a.date.localeCompare(b.date),
       );

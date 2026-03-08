@@ -75,6 +75,14 @@
   font-weight: 600;
 }
 
+.gastoDesc {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #888;
+  margin-top: 2px;
+}
+
 .removeBtn {
   background: none;
   border: none;

@@ -1,6 +1,7 @@
 import { useRendicionStore } from '../../store/useRendicionStore';
 import {
   calcTotalEfectivoEsperado,
+  calcTotalGastos,
   calcTotalPosnet,
   formatCurrency,
   formatDateShort,
@@ -13,6 +14,10 @@ export function SummaryTable() {
 
   const totalPosnet = calcTotalPosnet(days);
   const totalEfectivo = calcTotalEfectivoEsperado(days);
+  const totalGastos = calcTotalGastos(days);
+  
+  // Mostrar columna de gastos solo si hay gastos en algún día
+  const hasGastos = days.some((d) => (d.gastos || 0) > 0);
 
   if (days.length === 0) {
     return (
@@ -34,6 +39,9 @@ export function SummaryTable() {
               <th className={styles.th}>Fecha</th>
               <th className={`${styles.th} ${styles.right}`}>Total</th>
               <th className={`${styles.th} ${styles.right}`}>POSNET</th>
+              {hasGastos && (
+                <th className={`${styles.th} ${styles.right}`}>Gastos</th>
+              )}
               <th className={`${styles.th} ${styles.right}`}>Efectivo</th>
               <th className={styles.th}></th>
             </tr>
@@ -48,6 +56,22 @@ export function SummaryTable() {
                 <td className={`${styles.td} ${styles.right}`}>
                   {formatCurrency(day.posnet)}
                 </td>
+                {hasGastos && (
+                  <td
+                    className={`${styles.td} ${styles.right} ${
+                      (day.gastos || 0) > 0 ? styles.negative : ''
+                    }`}
+                    title={day.descripcionGasto || undefined}
+                  >
+                    {formatCurrency(day.gastos || 0)}
+                    {day.descripcionGasto && (
+                      <span className={styles.gastoDesc}>
+                        {' '}
+                        {day.descripcionGasto}
+                      </span>
+                    )}
+                  </td>
+                )}
                 <td
                   className={`${styles.td} ${styles.right} ${
                     day.efectivoDia < 0 ? styles.negative : styles.positive
@@ -81,6 +105,13 @@ export function SummaryTable() {
               >
                 {formatCurrency(totalPosnet)}
               </td>
+              {hasGastos && (
+                <td
+                  className={`${styles.td} ${styles.right} ${styles.footerValue} ${styles.negative}`}
+                >
+                  {formatCurrency(totalGastos)}
+                </td>
+              )}
               <td
                 className={`${styles.td} ${styles.right} ${styles.footerValue} ${styles.positive}`}
               >
@@ -99,6 +130,14 @@ export function SummaryTable() {
             {formatCurrency(totalPosnet)}
           </span>
         </div>
+        {hasGastos && (
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Total gastos</span>
+            <span className={`${styles.summaryAmount} ${styles.negative}`}>
+              {formatCurrency(totalGastos)}
+            </span>
+          </div>
+        )}
         <div className={styles.summaryItem}>
           <span className={styles.summaryLabel}>Total efectivo esperado</span>
           <span className={`${styles.summaryAmount} ${styles.highlight}`}>

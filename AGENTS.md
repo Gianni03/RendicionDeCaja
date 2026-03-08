@@ -145,3 +145,4 @@ Formato limpio, alineado para impresión en A4 vertical.
 - Persistencia funciona correctamente.
 - Indicador visual de diferencia es claro.
 - PDF se genera correctamente y es legible en impresión.
+

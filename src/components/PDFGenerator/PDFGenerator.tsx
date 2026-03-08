@@ -5,6 +5,7 @@ import {
   calcComparison,
   calcTotalContado,
   calcTotalEfectivoEsperado,
+  calcTotalGastos,
   calcTotalPosnet,
   formatDateShort,
 } from '../../utils/calculations';
@@ -66,6 +67,13 @@ function buildPDF(days: DayEntry[], bills: BillCount[]): jsPDF {
   doc.line(margin, y, pageWidth - margin, y);
   y += 8;
 
+  // Calcular totales una sola vez (disponible para todas las secciones)
+  const hasGastos = days.length > 0 && days.some((d) => (d.gastos || 0) > 0);
+  const totalFacturado = days.reduce((s, d) => s + d.totalFacturado, 0);
+  const totalPosnet = calcTotalPosnet(days);
+  const totalGastos = calcTotalGastos(days);
+  const totalEfectivo = calcTotalEfectivoEsperado(days);
+
   // ─── Section 1: Rendición por Día ────────────────────────────────────
 
   doc.setFont('helvetica', 'bold');
@@ -84,30 +92,52 @@ function buildPDF(days: DayEntry[], bills: BillCount[]): jsPDF {
     const dayRows = days
       .slice()
       .sort((a, b) => a.date.localeCompare(b.date))
-      .map((d) => [
-        formatDateShort(d.date),
-        formatNum(d.totalFacturado),
-        formatNum(d.posnet),
-        formatNum(d.efectivoDia),
-      ]);
+      .map((d) =>
+        hasGastos
+          ? [
+              formatDateShort(d.date),
+              formatNum(d.totalFacturado),
+              formatNum(d.posnet),
+              formatNum(d.gastos || 0),
+              formatNum(d.efectivoDia),
+            ]
+          : [
+              formatDateShort(d.date),
+              formatNum(d.totalFacturado),
+              formatNum(d.posnet),
+              formatNum(d.efectivoDia),
+            ],
+      );
 
-    const totalFacturado = days.reduce((s, d) => s + d.totalFacturado, 0);
-    const totalPosnet = calcTotalPosnet(days);
-    const totalEfectivo = calcTotalEfectivoEsperado(days);
+    const head = hasGastos
+      ? [['Fecha', 'Total Facturado', 'POSNET', 'Gastos', 'Efectivo']]
+      : [['Fecha', 'Total Facturado', 'POSNET', 'Efectivo']];
+
+    const foot = hasGastos
+      ? [
+          [
+            'TOTALES',
+            formatNum(totalFacturado),
+            formatNum(totalPosnet),
+            formatNum(totalGastos),
+            formatNum(totalEfectivo),
+          ],
+        ]
+      : [
+          [
+            'TOTALES',
+            formatNum(totalFacturado),
+            formatNum(totalPosnet),
+            formatNum(totalEfectivo),
+          ],
+        ];
 
     autoTable(doc, {
       startY: y,
       margin: { left: margin, right: margin },
-      head: [['Fecha', 'Total Facturado', 'POSNET', 'Efectivo']],
+      head,
       body: dayRows,
-      foot: [
-        [
-          'TOTALES',
-          formatNum(totalFacturado),
-          formatNum(totalPosnet),
-          formatNum(totalEfectivo),
-        ],
-      ],
+      foot,
       headStyles: {
         fillColor: [30, 30, 30],
         textColor: 255,
@@ -121,12 +151,20 @@ function buildPDF(days: DayEntry[], bills: BillCount[]): jsPDF {
         fontStyle: 'bold',
         fontSize: 9,
       },
-      columnStyles: {
-        0: { cellWidth: 35 },
-        1: { halign: 'right' },
-        2: { halign: 'right' },
-        3: { halign: 'right', fontStyle: 'bold' },
-      },
+      columnStyles: hasGastos
+        ? {
+            0: { cellWidth: 28 },
+            1: { halign: 'right' },
+            2: { halign: 'right' },
+            3: { halign: 'right' },
+            4: { halign: 'right', fontStyle: 'bold' },
+          }
+        : {
+            0: { cellWidth: 35 },
+            1: { halign: 'right' },
+            2: { halign: 'right' },
+            3: { halign: 'right', fontStyle: 'bold' },
+          },
       theme: 'grid',
       tableWidth: contentWidth,
     });
@@ -143,16 +181,21 @@ function buildPDF(days: DayEntry[], bills: BillCount[]): jsPDF {
   doc.text('2. TOTALES ACUMULADOS', margin, y);
   y += 6;
 
-  const totalPosnet = calcTotalPosnet(days);
-  const totalEfesperado = calcTotalEfectivoEsperado(days);
+  const totalesBody = hasGastos
+    ? [
+        ['Total POSNET acumulado', formatNum(totalPosnet)],
+        ['Total gastos', formatNum(totalGastos)],
+        ['Total efectivo esperado', formatNum(totalEfectivo)],
+      ]
+    : [
+        ['Total POSNET acumulado', formatNum(totalPosnet)],
+        ['Total efectivo esperado', formatNum(totalEfectivo)],
+      ];
 
   autoTable(doc, {
     startY: y,
     margin: { left: margin, right: margin },
-    body: [
-      ['Total POSNET acumulado', formatNum(totalPosnet)],
-      ['Total efectivo esperado', formatNum(totalEfesperado)],
-    ],
+    body: totalesBody,
     bodyStyles: { fontSize: 10, textColor: [30, 30, 30] },
     columnStyles: {
       0: { fontStyle: 'bold', cellWidth: 100 },
@@ -233,7 +276,7 @@ function buildPDF(days: DayEntry[], bills: BillCount[]): jsPDF {
   doc.text('4. RESULTADO', margin, y);
   y += 6;
 
-  const result = calcComparison(totalEfesperado, totalContado);
+  const result = calcComparison(totalEfectivo, totalContado);
   const statusText =
     result.status === 'exact'
       ? 'CUADRA'

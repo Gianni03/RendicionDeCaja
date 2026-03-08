@@ -12,11 +12,14 @@ export function DailyEntry() {
   const [date, setDate] = useState(getTodayISO());
   const [totalFacturado, setTotalFacturado] = useState('');
   const [posnet, setPosnet] = useState('');
+  const [gastos, setGastos] = useState('');
+  const [descripcionGasto, setDescripcionGasto] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   const facturadoNum = parseFloat(totalFacturado) || 0;
   const posnetNum = parseFloat(posnet) || 0;
-  const previewEfectivo = facturadoNum - posnetNum;
+  const gastosNum = parseFloat(gastos) || 0;
+  const previewEfectivo = facturadoNum - posnetNum - gastosNum;
 
   const canAdd = days.length < MAX_DAYS;
 
@@ -36,8 +39,12 @@ export function DailyEntry() {
       setError('El total POSNET no puede ser negativo.');
       return;
     }
+    if (gastosNum < 0) {
+      setError('Los gastos no pueden ser negativos.');
+      return;
+    }
 
-    const err = addDay(date, facturadoNum, posnetNum);
+    const err = addDay(date, facturadoNum, posnetNum, gastosNum, descripcionGasto);
     if (err) {
       setError(err);
       return;
@@ -47,6 +54,8 @@ export function DailyEntry() {
     setDate(getTodayISO());
     setTotalFacturado('');
     setPosnet('');
+    setGastos('');
+    setDescripcionGasto('');
   }
 
   return (
@@ -117,9 +126,41 @@ export function DailyEntry() {
                 required
               />
             </div>
+
+            <div className={styles.field}>
+              <label htmlFor="entry-gastos" className={styles.label}>
+                Gastos (opcional)
+              </label>
+              <input
+                id="entry-gastos"
+                type="number"
+                inputMode="decimal"
+                className={styles.input}
+                value={gastos}
+                onChange={(e) => setGastos(e.target.value)}
+                placeholder="0.00"
+                min="0"
+                step="0.01"
+              />
+            </div>
+
+            <div className={styles.field}>
+              <label htmlFor="entry-descripcion-gasto" className={styles.label}>
+                Descripción (opcional)
+              </label>
+              <input
+                id="entry-descripcion-gasto"
+                type="text"
+                className={styles.input}
+                value={descripcionGasto}
+                onChange={(e) => setDescripcionGasto(e.target.value)}
+                placeholder="Detalle del gasto"
+                maxLength={50}
+              />
+            </div>
           </div>
 
-          {(facturadoNum > 0 || posnetNum > 0) && (
+          {(facturadoNum > 0 || posnetNum > 0 || gastosNum > 0) && (
             <div className={styles.preview}>
               <span className={styles.previewLabel}>Efectivo del día:</span>
               <span

@@ -11,7 +11,9 @@ export interface DayEntry {
   date: string; // "YYYY-MM-DD"
   totalFacturado: number;
   posnet: number;
-  efectivoDia: number; // computed: totalFacturado - posnet
+  efectivoDia: number; // computed: totalFacturado - posnet - gastos
+  gastos?: number; // optional, default 0
+  descripcionGasto?: string; // optional, max 50 chars
 }
 
 export interface BillCount {
@@ -40,4 +42,6 @@ export interface DayFormInput {
   date: string;
   totalFacturado: string;
   posnet: string;
+  gastos?: string; // optional, maps to DayEntry.gastos
+  descripcionGasto?: string; // optional, maps to DayEntry.descripcionGasto
 }
